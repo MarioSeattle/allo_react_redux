@@ -21,7 +21,7 @@ const store = Redux.createStore(Redux.combineReducers({
     cards
 }));
 
-//For our first componont React allow us to start, jsx
+//For our first component React
 
 const App = (props) => {
 
@@ -30,4 +30,25 @@ const App = (props) => {
     </div>);
 };
 
-ReactDOM.render(<App>Allo <strong>Seattle</strong></App>, document.getElementById('root'));
+//Lets add a sidebar
+const Sidebar = React.createClass({
+    render(){
+        let props = this.props;
+
+        return (<div className='sidebar'>
+            <h2>All Decks</h2>
+            <ul>
+                {props.decks.map((deck, i) =>
+                //keys are needed for this type of childrem elements for reacts to tell apart
+                    <li key={i}> {deck.name}</li>
+
+                )}
+            </ul>
+            { props.addingDeck && <input ref='add' /> }
+        </div>);
+    }
+});
+
+ReactDOM.render((<App>
+    <Sidebar decks={[ { name: 'Deck 1'} ]} addingDeck={true} />
+</App>), document.getElementById('root'));
