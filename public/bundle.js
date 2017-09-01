@@ -24,24 +24,26 @@ var store = Redux.createStore(Redux.combineReducers({
     cards: cards
 }));
 
-//Keep an eye on the store for changes
-store.subscribe(function () {
-    console.log(store.getState());
-});
+//For our first componont React allow us to start, jsx
 
-//activate store action
-store.dispatch({
-    type: 'ADD_CARD',
-    data: {
-        front: 'front',
-        back: 'back'
-    }
-});
+var App = function App(props) {
 
-//Another action
-store.dispatch({
-    type: 'ADD_CARD',
-    data: {}
-});
+    return React.createElement(
+        'div',
+        { className: 'app' },
+        props.children
+    );
+};
+
+ReactDOM.render(React.createElement(
+    App,
+    null,
+    'Allo ',
+    React.createElement(
+        'strong',
+        null,
+        'Seattle'
+    )
+), document.getElementById('root'));
 
 },{}]},{},[1]);
