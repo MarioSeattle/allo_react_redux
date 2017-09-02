@@ -1,7 +1,10 @@
-//action is a parameter and the reducer is the function
-//We will make change to the state based on the action (function)
+//action creators ADD_DECK SHOW_ADD_DECK HIDE_ADD_DECK
+const addDeck = name => ({ type: ' ADD_DECK', data: name });
+const showAddDeck = () => ({ type: 'SHOW_ADD_DECK' });
+const hideAddDeck = () => ({ type: 'HIDE_ADD_DECK' });
 
-//Function will be reducers
+
+//Function (Reducer)
 const cards = (state, action) => {
     switch (action.type){
         case 'ADD_CARD':
@@ -16,13 +19,36 @@ const cards = (state, action) => {
     }
 };
 
-//Redux helper function to pass reducer functions
+//Function (Reducer)
+const decks = (state, action) => {
+    switch (action.type){
+        case 'ADD_DECK':
+            let newDeck = { name: action.data, id: +new Date };
+            return state.concat([newDeck]);
+        default:
+            return state || [];
+    }
+};
+
+//adding deck reducer to tell if we are showing text box
+const addingDeck = (state, action) => {
+    switch (action.type) {
+        case 'SHOW_ADD_DECK': return true;
+        case 'HIDE_ADD_DECK': return false;
+        //if not show or hide keep state otherwise true or false
+        default: return !!state;
+
+    }
+};
+
+//Redux helper function to pass reducer functions (Reducers add here)
 const store = Redux.createStore(Redux.combineReducers({
-    cards
+    cards,
+    decks,
+    addingDeck
 }));
 
 //For our first component React
-
 const App = (props) => {
 
     return (<div className='app'>
@@ -49,6 +75,22 @@ const Sidebar = React.createClass({
     }
 });
 
-ReactDOM.render((<App>
-    <Sidebar decks={[ { name: 'Deck 1'} ]} addingDeck={true} />
-</App>), document.getElementById('root'));
+//Create function to render more html -jsx and decks action
+function run () {
+    let state = store.getState();
+    console.log(state);
+    ReactDOM.render((<App>
+        <Sidebar decks={ state.decks } addingDeck={ state.addingDeck } />
+    </App>), document.getElementById('root'));
+
+}
+//run the function
+run();
+
+store.subscribe(run);
+
+window.show = () => store.dispatch(showAddDeck());
+window.hide = () => store.dispatch(hideAddDeck());
+window.add = () => store.dispatch(addDeck( new Date().toString()));
+
+
