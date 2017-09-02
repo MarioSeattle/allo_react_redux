@@ -3,7 +3,7 @@
 
 //action creators ADD_DECK SHOW_ADD_DECK HIDE_ADD_DECK
 var addDeck = function addDeck(name) {
-    return { type: ' ADD_DECK', data: name };
+    return { type: 'ADD_DECK', data: name };
 };
 var showAddDeck = function showAddDeck() {
     return { type: 'SHOW_ADD_DECK' };
