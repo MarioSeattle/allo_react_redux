@@ -1,5 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
+import { addDeck, showAddDeck, hideAddDeck } from '../actions';
+
+
+//create functions that keep track of state
+const mapStateToProps = ({ decks, addingDeck }) => ({
+        decks,
+        addingDeck
+    });
+
+const mapDispatchToProps = dispatch => ({
+    addDeck: name => dispatch(addDeck(name)),
+    showAddDeck: () => dispatch(showAddDeck()),
+    hideAddDeck: () => dispatch(hideAddDeck())
+});
+
 
 //Lets add a sidebar
 const Sidebar = React.createClass({
@@ -38,4 +54,4 @@ const Sidebar = React.createClass({
     }
 });
 
-export default Sidebar;
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
