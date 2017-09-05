@@ -6,9 +6,9 @@ import { addDeck, showAddDeck, hideAddDeck } from '../actions';
 
 //create functions that keep track of state
 const mapStateToProps = ({ decks, addingDeck }) => ({
-        decks,
-        addingDeck
-    });
+    decks,
+    addingDeck
+});
 
 const mapDispatchToProps = dispatch => ({
     addDeck: name => dispatch(addDeck(name)),

@@ -23428,8 +23428,6 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _redux = require('redux');
 
-var _actions = require('./actions');
-
 var _reactRedux = require('react-redux');
 
 var _reducers = require('./reducers');
@@ -23461,19 +23459,7 @@ function run() {
         _react2.default.createElement(
             _app2.default,
             null,
-            _react2.default.createElement(_sidebar2.default, {
-                decks: state.decks,
-                addingDeck: state.addingDeck,
-                addDeck: function addDeck(name) {
-                    return store.dispatch((0, _actions.addDeck)(name));
-                },
-                showAddDeck: function showAddDeck() {
-                    return store.dispatch((0, _actions.showAddDeck)());
-                },
-                hideAddDeck: function hideAddDeck() {
-                    return store.dispatch((0, _actions.hideAddDeck)());
-                }
-            })
+            _react2.default.createElement(_sidebar2.default, null)
         )
     ), document.getElementById('root'));
 }
@@ -23482,7 +23468,7 @@ run();
 
 store.subscribe(run);
 
-},{"./actions":223,"./components/app":225,"./components/sidebar":226,"./reducers":227,"react":212,"react-dom":45,"react-redux":181,"redux":218}],225:[function(require,module,exports){
+},{"./components/app":225,"./components/sidebar":226,"./reducers":227,"react":212,"react-dom":45,"react-redux":181,"redux":218}],225:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -23497,7 +23483,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 //For our first component React
 var App = function App(props) {
-
     return _react2.default.createElement(
         'div',
         { className: 'app' },
