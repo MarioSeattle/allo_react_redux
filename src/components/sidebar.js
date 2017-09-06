@@ -32,7 +32,7 @@ const Sidebar = React.createClass({
             <h2>All Decks</h2>
 
 
-            <bottom onClick={ e => this.props.showAddDeck() }>Click to Add</bottom>
+            <bottom onClick={ e => this.props.showAddDeck() }>Add Deck</bottom>
 
             <ul>
                 {props.decks.map((deck, i) =>

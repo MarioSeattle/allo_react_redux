@@ -28649,22 +28649,40 @@ var _Sidebar = require('./Sidebar');
 
 var _Sidebar2 = _interopRequireDefault(_Sidebar);
 
+var _reactRedux = require('react-redux');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//container component 
+var mapStateToProps = function mapStateToProps(props, _ref) {
+    var deckId = _ref.params.deckId;
+    return {
+        deckId: deckId
+    };
+};
+
 //For our first component React
-var App = function App(_ref) {
-    var children = _ref.children;
+var App = function App(_ref2) {
+    var deckId = _ref2.deckId,
+        children = _ref2.children;
 
     return _react2.default.createElement(
         'div',
         { className: 'app' },
         _react2.default.createElement(_Sidebar2.default, null),
+        _react2.default.createElement(
+            'h1',
+            null,
+            ' Deck ',
+            deckId,
+            ' '
+        ),
         children
     );
 };
-exports.default = App;
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(App);
 
-},{"./Sidebar":286,"react":270}],286:[function(require,module,exports){
+},{"./Sidebar":286,"react":270,"react-redux":183}],286:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28739,7 +28757,7 @@ var Sidebar = _react2.default.createClass({
                 { onClick: function onClick(e) {
                         return _this.props.showAddDeck();
                     } },
-                'Click to Add'
+                'Add Deck'
             ),
             _react2.default.createElement(
                 'ul',
