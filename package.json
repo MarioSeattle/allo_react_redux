@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "build": "watchify src/app.js -o public/bundle.js -t [ babelify --presets [ react es2015 ] ]",
-"server": "cd public; live-server --port=1234 --entry-file=index.html"
+    "server": "cd public; live-server --port=1234 --entry-file=index.html"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +15,12 @@
     "babel-preset-react": "^6.24.1",
     "babelify": "^7.3.0",
     "live-server": "^1.2.0",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.6",
+    "react-router": "^3.0.5",
+    "react-router-redux": "^4.0.8",
+    "redux": "^3.7.2",
     "watchify": "^3.9.0"
   }
 }
