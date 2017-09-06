@@ -17,12 +17,19 @@ const store = createStore(combineReducers(reducers));
 //add router for history object ERROR WHEN USING browserHistory
 const history = syncHistoryWithStore(browserHistory, store);
 
+//fix bundle.js:28537 Warning: [react-router] You cannot change <Router routes>; it will be ignored
+const routes = (<Route path='/' component={App}>
+/*other routes will go here */
+    
+
+</Route>);
+
 //Create function to render more html -jsx and decks action
 function run () {
     let state = store.getState();
     ReactDOM.render((<Provider store={store}>
         <Router history={history}>
-            <Route path='/' component={App}></Route>
+            {routes}
         </Router>
     </Provider>), document.getElementById('root'));
 
