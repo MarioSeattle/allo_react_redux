@@ -2,10 +2,10 @@ import React from 'react';
 import Sidebar from './Sidebar';
 
 //For our first component React
-const App = (props) => {
+const App = ({ children }) => {
     return (<div className='app'>
         <Sidebar />
-        {props.children}
+        {children}
     </div>);
 };
 export default App;

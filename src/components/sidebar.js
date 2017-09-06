@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { addDeck, showAddDeck, hideAddDeck } from '../actions';
-
+//adding new route to show Cards
+import { Link } from 'react-router';
 
 //create functions that keep track of state
 const mapStateToProps = ({ decks, addingDeck }) => ({
@@ -36,8 +37,9 @@ const Sidebar = React.createClass({
             <ul>
                 {props.decks.map((deck, i) =>
                     //keys are needed for this type of childrem elements for reacts to tell apart
-                    <li key={i}> {deck.name}</li>
-
+                    <li key={i}>
+                    <Link to={`/deck/${deck.id}`}>{deck.name}</Link>
+                    </li>
                 )}
             </ul>
             { props.addingDeck && <input ref='add' onKeyPress={this.createDeck} /> }
