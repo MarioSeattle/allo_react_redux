@@ -13,8 +13,10 @@ import App from './components/App';
 //implementing new Route
 import VisibleCards from './components/VisibleCards';
 
+import * as localStorage from './localStorage';
+
 //Redux helper function to pass reducer functions (Reducers add here)
-const store = createStore(combineReducers(reducers));
+const store = createStore(combineReducers(reducers), localStorage.get());
 
 //add router for history object ERROR WHEN USING browserHistory
 const history = syncHistoryWithStore(browserHistory, store);
@@ -22,6 +24,9 @@ const history = syncHistoryWithStore(browserHistory, store);
 //Create function to render more html -jsx and decks action
 function run () {
     let state = store.getState();
+    
+    localStorage.set(state, ['decks', 'cards']);
+    
     ReactDOM.render((<Provider store={store}>
         <Router history={history}>
             <Route path='/' component={App}>
