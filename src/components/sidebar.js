@@ -10,14 +10,11 @@ const mapStateToProps = ({ decks, addingDeck }) => ({
     decks,
     addingDeck
 });
-
 const mapDispatchToProps = dispatch => ({
     addDeck: name => dispatch(addDeck(name)),
     showAddDeck: () => dispatch(showAddDeck()),
     hideAddDeck: () => dispatch(hideAddDeck())
 });
-
-
 //Lets add a sidebar
 const Sidebar = React.createClass({
     componentDidUpdate(){
@@ -30,10 +27,6 @@ const Sidebar = React.createClass({
 
         return (<div className='sidebar'>
             <h2>All Decks</h2>
-
-
-            <bottom onClick={ e => this.props.showAddDeck() }>Add Deck</bottom>
-
             <ul>
                 {props.decks.map((deck, i) =>
                     //keys are needed for this type of childrem elements for reacts to tell apart
