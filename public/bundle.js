@@ -28565,6 +28565,10 @@ var hideAddDeck = exports.hideAddDeck = function hideAddDeck() {
   return { type: 'HIDE_ADD_DECK' };
 };
 
+var addCard = exports.addCard = function addCard(card) {
+  return { type: 'ADD_CARD', data: card };
+};
+
 },{}],284:[function(require,module,exports){
 'use strict';
 
@@ -28595,6 +28599,10 @@ var _App2 = _interopRequireDefault(_App);
 var _VisibleCards = require('./components/VisibleCards');
 
 var _VisibleCards2 = _interopRequireDefault(_VisibleCards);
+
+var _NewCardModal = require('./components/NewCardModal');
+
+var _NewCardModal2 = _interopRequireDefault(_NewCardModal);
 
 var _localStorage = require('./localStorage');
 
@@ -28632,7 +28640,11 @@ function run() {
             _react2.default.createElement(
                 _reactRouter.Route,
                 { path: '/', component: _App2.default },
-                _react2.default.createElement(_reactRouter.Route, { path: '/deck/:deckId', component: _VisibleCards2.default })
+                _react2.default.createElement(
+                    _reactRouter.Route,
+                    { path: '/deck/:deckId', component: _VisibleCards2.default },
+                    _react2.default.createElement(_reactRouter.Route, { path: '/deck/:deckId/new', component: _NewCardModal2.default })
+                )
             )
         )
     ), document.getElementById('root'));
@@ -28641,7 +28653,7 @@ function run() {
 run();
 store.subscribe(run);
 
-},{"./components/App":285,"./components/VisibleCards":288,"./localStorage":289,"./reducers":290,"react":270,"react-dom":47,"react-redux":183,"react-router":220,"react-router-redux":190,"redux":276}],285:[function(require,module,exports){
+},{"./components/App":285,"./components/NewCardModal":287,"./components/VisibleCards":290,"./localStorage":291,"./reducers":292,"react":270,"react-dom":47,"react-redux":183,"react-router":220,"react-router-redux":190,"redux":276}],285:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28686,7 +28698,132 @@ var App = function App(_ref2) {
 };
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(App);
 
-},{"./Sidebar":286,"./Toolbar":287,"react":270,"react-redux":183}],286:[function(require,module,exports){
+},{"./Sidebar":288,"./Toolbar":289,"react":270,"react-redux":183}],286:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactRouter = require('react-router');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var CardModal = _react2.default.createClass({
+    displayName: 'CardModal',
+    componentDidUpdate: function componentDidUpdate() {
+        _reactDom2.default.findDOMNode(this.refs.front).focus();
+    },
+    render: function render() {
+        var _props = this.props,
+            card = _props.card,
+            onDelete = _props.onDelete;
+
+
+        return _react2.default.createElement(
+            'div',
+            { className: 'modal' },
+            _react2.default.createElement(
+                'h1',
+                null,
+                onDelete ? 'Edit' : 'New',
+                ' Card '
+            ),
+            _react2.default.createElement(
+                'label',
+                null,
+                'Card Front: '
+            ),
+            _react2.default.createElement('textarea', { ref: 'front', defaultValue: card.front }),
+            _react2.default.createElement(
+                'label',
+                null,
+                'Card Back: '
+            ),
+            _react2.default.createElement('textarea', { ref: 'back', defaultValue: card.back }),
+            _react2.default.createElement(
+                'p',
+                null,
+                _react2.default.createElement(
+                    'button',
+                    { onClick: this.onSave },
+                    ' Save Card '
+                ),
+                _react2.default.createElement(
+                    _reactRouter.Link,
+                    { className: 'btn', to: '/deck/' + card.deckId },
+                    ' Cancel '
+                ),
+                onDelete ? _react2.default.createElement(
+                    'button',
+                    { onClick: this.onDelete, className: 'delete' },
+                    ' Delete Card '
+                ) : null
+            )
+        );
+    },
+    onSave: function onSave(evt) {
+        var front = _reactDom2.default.findDOMNode(this.refs.front);
+        var back = _reactDom2.default.findDOMNode(this.refs.back);
+
+        this.props.onSave(Object.assign({}, this.props.card, {
+            front: front.value,
+            back: back.value
+        }));
+
+        _reactRouter.browserHistory.push('/deck/' + this.props.card.deckId);
+    },
+    onDelete: function onDelete(e) {
+        this.props.onDelete(this.props.card.id);
+        _reactRouter.browserHistory.push('/deck/' + this.props.card.deckId);
+    }
+});
+
+exports.default = CardModal;
+
+},{"react":270,"react-dom":47,"react-router":220}],287:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+   value: true
+});
+
+var _CardModal = require('./CardModal');
+
+var _CardModal2 = _interopRequireDefault(_CardModal);
+
+var _reactRedux = require('react-redux');
+
+var _actions = require('../actions');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(props, _ref) {
+   var deckId = _ref.params.deckId;
+   return {
+      card: { deckId: deckId }
+   };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+   return {
+      onSave: function onSave(card) {
+         return dispatch((0, _actions.addCard)(card));
+      }
+   };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_CardModal2.default);
+
+},{"../actions":283,"./CardModal":286,"react-redux":183}],288:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28784,7 +28921,7 @@ var Sidebar = _react2.default.createClass({
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Sidebar);
 
-},{"../actions":283,"react":270,"react-dom":47,"react-redux":183,"react-router":220}],287:[function(require,module,exports){
+},{"../actions":283,"react":270,"react-dom":47,"react-redux":183,"react-router":220}],289:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28819,12 +28956,12 @@ var Toolbar = function Toolbar(_ref) {
         null,
         _react2.default.createElement(
             _reactRouter.Link,
-            { className: 'btn', to: '/decks/' + deckId + '/new' },
+            { className: 'btn', to: '/deck/' + deckId + '/new' },
             ' + New Card '
         ),
         _react2.default.createElement(
             _reactRouter.Link,
-            { className: 'btn', to: '/decks/' + deckId + '/info' },
+            { className: 'btn', to: '/deck/' + deckId + '/info' },
             ' + Info Deck '
         )
     ) : null;
@@ -28847,7 +28984,7 @@ var Toolbar = function Toolbar(_ref) {
 
 exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(Toolbar);
 
-},{"../actions":283,"react":270,"react-redux":183,"react-router":220}],288:[function(require,module,exports){
+},{"../actions":283,"react":270,"react-redux":183,"react-router":220}],290:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28860,17 +28997,20 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Cards = function Cards() {
+var Cards = function Cards(_ref) {
+  var children = _ref.children;
+
   return _react2.default.createElement(
     'div',
     null,
-    'Deck will display here'
+    'Deck will display here ',
+    children
   );
 };
 
 exports.default = Cards;
 
-},{"react":270}],289:[function(require,module,exports){
+},{"react":270}],291:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28889,7 +29029,7 @@ var set = exports.set = function set(state, props) {
     localStorage.setItem('state', JSON.stringify(toSave));
 };
 
-},{}],290:[function(require,module,exports){
+},{}],292:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

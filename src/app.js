@@ -13,6 +13,8 @@ import App from './components/App';
 //implementing new Route
 import VisibleCards from './components/VisibleCards';
 
+import NewCardModal from './components/NewCardModal';
+
 import * as localStorage from './localStorage';
 
 //Redux helper function to pass reducer functions (Reducers add here)
@@ -30,7 +32,9 @@ function run () {
     ReactDOM.render((<Provider store={store}>
         <Router history={history}>
             <Route path='/' component={App}>
-                <Route path='/deck/:deckId' component={VisibleCards} />
+                <Route path='/deck/:deckId' component={VisibleCards}>
+                    <Route path='/deck/:deckId/new' component={NewCardModal}/>
+                </Route>
             </Route>
         </Router>
     </Provider>), document.getElementById('root'));

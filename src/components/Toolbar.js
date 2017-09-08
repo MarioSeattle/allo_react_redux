@@ -8,8 +8,8 @@ const mapDispatchToProps = dispatch => ({
 });
 const Toolbar = ({ deckId, showAddDeck }) => {
     let deckTools = deckId ? (<div>
-        <Link className='btn' to={`/decks/${deckId}/new`}> + New Card </Link>
-        <Link className='btn' to={`/decks/${deckId}/info`}> + Info Deck </Link>
+        <Link className='btn' to={`/deck/${deckId}/new`}> + New Card </Link>
+        <Link className='btn' to={`/deck/${deckId}/info`}> + Info Deck </Link>
     </div>) : null;
 
     return (<div className="toolbar">
