@@ -28758,6 +28758,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -28770,75 +28772,101 @@ var _reactRouter = require('react-router');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var CardModal = _react2.default.createClass({
-    displayName: 'CardModal',
-    componentDidUpdate: function componentDidUpdate() {
-        _reactDom2.default.findDOMNode(this.refs.front).focus();
-    },
-    render: function render() {
-        var _props = this.props,
-            card = _props.card,
-            onDelete = _props.onDelete;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-        return _react2.default.createElement(
-            'div',
-            { className: 'modal' },
-            _react2.default.createElement(
-                'h1',
-                null,
-                onDelete ? 'Edit' : 'New',
-                ' Card '
-            ),
-            _react2.default.createElement(
-                'label',
-                null,
-                'Card Front: '
-            ),
-            _react2.default.createElement('textarea', { ref: 'front', defaultValue: card.front }),
-            _react2.default.createElement(
-                'label',
-                null,
-                'Card Back: '
-            ),
-            _react2.default.createElement('textarea', { ref: 'back', defaultValue: card.back }),
-            _react2.default.createElement(
-                'p',
-                null,
-                _react2.default.createElement(
-                    'button',
-                    { onClick: this.onSave },
-                    ' Save Card '
-                ),
-                _react2.default.createElement(
-                    _reactRouter.Link,
-                    { className: 'btn', to: '/deck/' + card.deckId },
-                    ' Cancel '
-                ),
-                onDelete ? _react2.default.createElement(
-                    'button',
-                    { onClick: this.onDelete, className: 'delete' },
-                    ' Delete Card '
-                ) : null
-            )
-        );
-    },
-    onSave: function onSave(evt) {
-        var front = _reactDom2.default.findDOMNode(this.refs.front);
-        var back = _reactDom2.default.findDOMNode(this.refs.back);
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-        this.props.onSave(Object.assign({}, this.props.card, {
-            front: front.value,
-            back: back.value
-        }));
+var CardModal = function (_React$Component) {
+    _inherits(CardModal, _React$Component);
 
-        _reactRouter.browserHistory.push('/deck/' + this.props.card.deckId);
-    },
-    onDelete: function onDelete(e) {
-        this.props.onDelete(this.props.card.id);
-        _reactRouter.browserHistory.push('/deck/' + this.props.card.deckId);
+    function CardModal() {
+        _classCallCheck(this, CardModal);
+
+        return _possibleConstructorReturn(this, (CardModal.__proto__ || Object.getPrototypeOf(CardModal)).apply(this, arguments));
     }
-});
+
+    _createClass(CardModal, [{
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            _reactDom2.default.findDOMNode(this.refs.front).focus();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                card = _props.card,
+                onDelete = _props.onDelete;
+
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'modal' },
+                _react2.default.createElement(
+                    'h1',
+                    null,
+                    onDelete ? 'Edit' : 'New',
+                    ' Card '
+                ),
+                _react2.default.createElement(
+                    'label',
+                    null,
+                    'Card Front: '
+                ),
+                _react2.default.createElement('textarea', { ref: 'front', defaultValue: card.front }),
+                _react2.default.createElement(
+                    'label',
+                    null,
+                    'Card Back: '
+                ),
+                _react2.default.createElement('textarea', { ref: 'back', defaultValue: card.back }),
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.onSave },
+                        ' Save Card '
+                    ),
+                    _react2.default.createElement(
+                        _reactRouter.Link,
+                        { className: 'btn', to: '/deck/' + card.deckId },
+                        ' Cancel '
+                    ),
+                    onDelete ? _react2.default.createElement(
+                        'button',
+                        { onClick: this.onDelete, className: 'delete' },
+                        ' Delete Card '
+                    ) : null
+                )
+            );
+        }
+    }, {
+        key: 'onSave',
+        value: function onSave(evt) {
+            var front = _reactDom2.default.findDOMNode(this.refs.front);
+            var back = _reactDom2.default.findDOMNode(this.refs.back);
+
+            this.props.onSave(Object.assign({}, this.props.card, {
+                front: front.value,
+                back: back.value
+            }));
+
+            _reactRouter.browserHistory.push('/deck/' + this.props.card.deckId);
+        }
+    }, {
+        key: 'onDelete',
+        value: function onDelete(e) {
+            this.props.onDelete(this.props.card.id);
+            _reactRouter.browserHistory.push('/deck/' + this.props.card.deckId);
+        }
+    }]);
+
+    return CardModal;
+}(_react2.default.Component);
+
+;
 
 exports.default = CardModal;
 
@@ -28923,6 +28951,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -28939,6 +28969,14 @@ var _reactRouter = require('react-router');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+//adding new route to show Cards
+
+
 //create functions that keep track of state
 var mapStateToProps = function mapStateToProps(_ref) {
     var decks = _ref.decks,
@@ -28948,8 +28986,6 @@ var mapStateToProps = function mapStateToProps(_ref) {
         addingDeck: addingDeck
     };
 };
-//adding new route to show Cards
-
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return {
         addDeck: function addDeck(name) {
@@ -28964,53 +29000,70 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     };
 };
 //Lets add a sidebar
-var Sidebar = _react2.default.createClass({
-    displayName: 'Sidebar',
-    componentDidUpdate: function componentDidUpdate() {
-        //if element exist Focus
-        var el = _reactDom2.default.findDOMNode(this.refs.add);
-        if (el) el.focus();
-    },
-    render: function render() {
-        var props = this.props;
 
-        return _react2.default.createElement(
-            'div',
-            { className: 'sidebar' },
-            _react2.default.createElement(
-                'h2',
-                null,
-                'All Decks'
-            ),
-            _react2.default.createElement(
-                'ul',
-                null,
-                props.decks.map(function (deck, i) {
-                    return (
-                        //keys are needed for this type of childrem elements for reacts to tell apart
-                        _react2.default.createElement(
-                            'li',
-                            { key: i },
-                            _react2.default.createElement(
-                                _reactRouter.Link,
-                                { to: '/deck/' + deck.id },
-                                deck.name
-                            )
-                        )
-                    );
-                })
-            ),
-            props.addingDeck && _react2.default.createElement('input', { ref: 'add', onKeyPress: this.createDeck })
-        );
-    },
-    createDeck: function createDeck(evt) {
-        if (evt.which !== 13) return;
-        //otherwise get the deck name
-        var name = _reactDom2.default.findDOMNode(this.refs.add).value;
-        this.props.addDeck(name);
-        this.props.hideAddDeck();
+var Sidebar = function (_React$Component) {
+    _inherits(Sidebar, _React$Component);
+
+    function Sidebar() {
+        _classCallCheck(this, Sidebar);
+
+        return _possibleConstructorReturn(this, (Sidebar.__proto__ || Object.getPrototypeOf(Sidebar)).apply(this, arguments));
     }
-});
+
+    _createClass(Sidebar, [{
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            //if element exist Focus
+            var el = _reactDom2.default.findDOMNode(this.refs.add);
+            if (el) el.focus();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var props = this.props;
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'sidebar' },
+                _react2.default.createElement(
+                    'h2',
+                    null,
+                    'All Decks'
+                ),
+                _react2.default.createElement(
+                    'ul',
+                    null,
+                    props.decks.map(function (deck, i) {
+                        return (
+                            //keys are needed for this type of childrem elements for reacts to tell apart
+                            _react2.default.createElement(
+                                'li',
+                                { key: i },
+                                _react2.default.createElement(
+                                    _reactRouter.Link,
+                                    { to: '/deck/' + deck.id },
+                                    deck.name
+                                )
+                            )
+                        );
+                    })
+                ),
+                props.addingDeck && _react2.default.createElement('input', { ref: 'add', onKeyPress: this.createDeck })
+            );
+        }
+    }, {
+        key: 'createDeck',
+        value: function createDeck(evt) {
+            if (evt.which !== 13) return;
+            //otherwise get the deck name
+            var name = _reactDom2.default.findDOMNode(this.refs.add).value;
+            this.props.addDeck(name);
+            this.props.hideAddDeck();
+        }
+    }]);
+
+    return Sidebar;
+}(_react2.default.Component);
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Sidebar);
 

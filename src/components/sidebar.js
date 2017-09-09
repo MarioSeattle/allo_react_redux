@@ -16,12 +16,13 @@ const mapDispatchToProps = dispatch => ({
     hideAddDeck: () => dispatch(hideAddDeck())
 });
 //Lets add a sidebar
-const Sidebar = React.createClass({
+class Sidebar extends React.Component {
     componentDidUpdate(){
         //if element exist Focus
         var el = ReactDOM.findDOMNode(this.refs.add);
         if (el) el.focus();
-    },
+    }
+
     render(){
         let props = this.props;
 
@@ -37,7 +38,7 @@ const Sidebar = React.createClass({
             </ul>
             { props.addingDeck && <input ref='add' onKeyPress={this.createDeck} /> }
         </div>);
-    },
+    }
 
     createDeck(evt){
         if (evt.which !== 13) return;
@@ -47,6 +48,6 @@ const Sidebar = React.createClass({
         this.props.hideAddDeck();
 
     }
-});
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
