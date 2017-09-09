@@ -28569,6 +28569,13 @@ var addCard = exports.addCard = function addCard(card) {
   return { type: 'ADD_CARD', data: card };
 };
 
+var updateCard = exports.updateCard = function updateCard(card) {
+  return { type: 'UPDATE_CARD', data: card };
+};
+var deleteCard = exports.deleteCard = function deleteCard(cardId) {
+  return { type: 'DELETE_CARD', data: cardId };
+};
+
 },{}],284:[function(require,module,exports){
 'use strict';
 
@@ -28603,6 +28610,10 @@ var _VisibleCards2 = _interopRequireDefault(_VisibleCards);
 var _NewCardModal = require('./components/NewCardModal');
 
 var _NewCardModal2 = _interopRequireDefault(_NewCardModal);
+
+var _EditCardModal = require('./components/EditCardModal');
+
+var _EditCardModal2 = _interopRequireDefault(_EditCardModal);
 
 var _localStorage = require('./localStorage');
 
@@ -28643,7 +28654,8 @@ function run() {
                 _react2.default.createElement(
                     _reactRouter.Route,
                     { path: '/deck/:deckId', component: _VisibleCards2.default },
-                    _react2.default.createElement(_reactRouter.Route, { path: '/deck/:deckId/new', component: _NewCardModal2.default })
+                    _react2.default.createElement(_reactRouter.Route, { path: '/deck/:deckId/new', component: _NewCardModal2.default }),
+                    _react2.default.createElement(_reactRouter.Route, { path: '/deck/:deckId/edit/:cardId', component: _EditCardModal2.default })
                 )
             )
         )
@@ -28653,7 +28665,7 @@ function run() {
 run();
 store.subscribe(run);
 
-},{"./components/App":285,"./components/NewCardModal":288,"./components/VisibleCards":291,"./localStorage":292,"./reducers":293,"react":270,"react-dom":47,"react-redux":183,"react-router":220,"react-router-redux":190,"redux":276}],285:[function(require,module,exports){
+},{"./components/App":285,"./components/EditCardModal":288,"./components/NewCardModal":289,"./components/VisibleCards":292,"./localStorage":293,"./reducers":294,"react":270,"react-dom":47,"react-redux":183,"react-router":220,"react-router-redux":190,"redux":276}],285:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28698,7 +28710,7 @@ var App = function App(_ref2) {
 };
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(App);
 
-},{"./Sidebar":289,"./Toolbar":290,"react":270,"react-redux":183}],286:[function(require,module,exports){
+},{"./Sidebar":290,"./Toolbar":291,"react":270,"react-redux":183}],286:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28834,6 +28846,46 @@ exports.default = CardModal;
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _actions = require('../actions');
+
+var _reactRedux = require('react-redux');
+
+var _CardModal = require('./CardModal');
+
+var _CardModal2 = _interopRequireDefault(_CardModal);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(_ref, _ref2) {
+    var cards = _ref.cards;
+    var cardId = _ref2.params.cardId;
+    return {
+        card: cards.filter(function (card) {
+            return card.id === parseInt(cardId, 10);
+        })[0]
+    };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        onSave: function onSave(card) {
+            return dispatch((0, _actions.updateCard)(card));
+        },
+        onDelete: function onDelete(cardId) {
+            return dispatch((0, _actions.deleteCard)(cardId));
+        }
+    };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_CardModal2.default);
+
+},{"../actions":283,"./CardModal":287,"react-redux":183}],289:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
    value: true
 });
 
@@ -28864,7 +28916,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_CardModal2.default);
 
-},{"../actions":283,"./CardModal":287,"react-redux":183}],289:[function(require,module,exports){
+},{"../actions":283,"./CardModal":287,"react-redux":183}],290:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28962,7 +29014,7 @@ var Sidebar = _react2.default.createClass({
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Sidebar);
 
-},{"../actions":283,"react":270,"react-dom":47,"react-redux":183,"react-router":220}],290:[function(require,module,exports){
+},{"../actions":283,"react":270,"react-dom":47,"react-redux":183,"react-router":220}],291:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29025,7 +29077,7 @@ var Toolbar = function Toolbar(_ref) {
 
 exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(Toolbar);
 
-},{"../actions":283,"react":270,"react-redux":183,"react-router":220}],291:[function(require,module,exports){
+},{"../actions":283,"react":270,"react-redux":183,"react-router":220}],292:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29070,7 +29122,7 @@ var Cards = function Cards(_ref3) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(Cards);
 
-},{"./Card":286,"react":270,"react-redux":183}],292:[function(require,module,exports){
+},{"./Card":286,"react":270,"react-redux":183}],293:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29089,7 +29141,7 @@ var set = exports.set = function set(state, props) {
     localStorage.setItem('state', JSON.stringify(toSave));
 };
 
-},{}],293:[function(require,module,exports){
+},{}],294:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29104,6 +29156,18 @@ var cards = exports.cards = function cards(state, action) {
             });
             //splitting the state object into individual properties
             return state.concat([newCard]);
+
+        //INMUTABILITY RETURNING A NEW STATE OBJECT
+        case 'UPDATE_CARD':
+            var cardUpdate = action.data;
+            return state.map(function (card) {
+                return card.id !== cardUpdate.id ? card : Object.assign({}, card, cardUpdate);
+            });
+        case 'DELETE_CARD':
+            return state.filter(function (c) {
+                return c.id !== action.data;
+            });
+
         default:
             return state || [];
     }

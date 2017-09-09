@@ -14,6 +14,8 @@ import App from './components/App';
 import VisibleCards from './components/VisibleCards';
 
 import NewCardModal from './components/NewCardModal';
+import EditCardModal from './components/EditCardModal';
+
 
 import * as localStorage from './localStorage';
 
@@ -34,6 +36,7 @@ function run () {
             <Route path='/' component={App}>
                 <Route path='/deck/:deckId' component={VisibleCards}>
                     <Route path='/deck/:deckId/new' component={NewCardModal}/>
+                    <Route path='/deck/:deckId/edit/:cardId' component={EditCardModal}/>
                 </Route>
             </Route>
         </Router>
